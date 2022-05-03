@@ -191,6 +191,14 @@ export default {
               this.validity.ID = true;
               this.err_msg = "";
             }
+          })
+          .catch((error) => {
+            if (!error.response) {
+              // network error
+              this.errorStatus = "Error: Network Error";
+            } else {
+              this.errorStatus = error.response.data.message;
+            }
           });
       }
     },

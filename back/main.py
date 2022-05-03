@@ -6,13 +6,15 @@ from pydantic import BaseModel
 from fastapi.templating import Jinja2Templates 
 from fastapi.middleware.cors import CORSMiddleware
 
-import mysql
 import requests
 import xmltodict
 import json
 import re
 from datetime import datetime
 from pytz import timezone
+import os
+
+from back import mysql
 
 templates = Jinja2Templates(directory='static') 
 
@@ -81,7 +83,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://192.168.74.187:9027",
+        f"{os.environ.get('HOST_ADDR')}:{os.environ.get('PORT_FRONT')}",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -132,7 +134,7 @@ async def check_api_from_ncloud(data: API):
     querystring = f'?w=300&h=300&center=127.1054221,37.3591614&level=16&X-NCP-APIGW-API-KEY-ID={data.KEY}'
 
     res = requests.get(url+querystring, headers={ 
-      'Referer': 'http://192.168.74.187.9025'
+      'Referer': os.environ.get('HOST_ADDR')
     })
     return res.status_code == 200
         

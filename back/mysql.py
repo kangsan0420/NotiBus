@@ -7,7 +7,7 @@ class MySQL:
         self._com = connect(
             user='root', 
             passwd='1234', 
-            host='web_db',
+            host='mariadb',
             port=3306,
             db=database
         )

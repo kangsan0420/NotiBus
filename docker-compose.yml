@@ -1,0 +1,31 @@
+version: "3.7"
+
+networks:
+  notibus:
+    external: true
+
+services:
+  server:
+    image: notibus:v1.0
+    environment:
+      HOST_ADDR: ${HOST_ADDR}
+      PORT_FRONT: ${PORT_FRONT}
+      PORT_BACK: ${PORT_BACK}
+      TZ: Asia/Seoul
+    networks:
+      - notibus
+    ports:
+      - ${PORT_FRONT}:80
+      - ${PORT_BACK}:8080
+
+  mariadb:
+    image: mariadb:10
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: 1234
+      MARIADB_DATABASE: NOTIBUS
+      TZ: Asia/Seoul
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - notibus

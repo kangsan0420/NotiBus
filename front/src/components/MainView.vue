@@ -25,6 +25,21 @@
       </template>
       <b-container>
         <b-row>
+          <b-col>
+            <img id="bus2" src="../../public/bus.svg" />
+          </b-col>
+          <b-col>
+            <img
+              id="bus1"
+              src="../../public/bus.svg"
+              :style="'transform: translateX(' + pos + 'vw);'"
+            />
+          </b-col>
+          <b-col class="text-right">
+            <img class="stop" src="../../public/station.svg" />
+          </b-col>
+        </b-row>
+        <b-row>
           <b-col cols="3" class="text-left">{{ str_st2 }}</b-col>
           <b-col cols="1" class="text-center">→</b-col>
           <b-col cols="4" class="text-center">{{ str_st1 }}</b-col>
@@ -118,6 +133,12 @@ export default {
     },
     req_term() {
       return this.info.req_term;
+    },
+    pos() {
+      const p2 = this.info.sec2 || 5400; // 90 min default
+      const p1 = this.info.sec1 || 0; // if none, display none
+      const p_norm = Math.max(p2 - p1, 0) / p2; // 0. ~ 1.
+      return -20 + p_norm * 55; // -20 ~ 35
     },
   },
   data() {
@@ -216,5 +237,17 @@ export default {
 <style lang="scss" scoped>
 .sec1 {
   font-size: larger;
+}
+#bus1 {
+  width: 20vw;
+}
+#bus2 {
+  width: 15vw;
+  clip-path: polygon(50% 0, 50% 100%, 100% 100%, 100% 0);
+  transform: translate(-10vw, 3vw);
+}
+.stop {
+  width: 10vw;
+  transform: scaleX(-1) translateY(3vw);
 }
 </style>

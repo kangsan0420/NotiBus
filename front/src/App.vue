@@ -33,7 +33,7 @@ export default {
     return {
       is_logon: false,
       is_history_mode: false,
-      base_url: "http://192.168.74.187:9026",
+      base_url: `${process.env.VUE_APP_HOST_ADDR}:${process.env.VUE_APP_PORT_BACK}`,
     };
   },
   provide() {
@@ -42,8 +42,9 @@ export default {
     };
   },
   mounted() {
-    // VueCookies.set("logon", "kslee");
+    // VueCookies.set("logon", "USER_ID");
     // this.$refs.nav_bar.isLogon = true;
+    // this.loginChanged();
   },
   methods: {
     loginChanged() {
