@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse 
 from pydantic import BaseModel
-from fastapi.templating import Jinja2Templates 
 from fastapi.middleware.cors import CORSMiddleware
 
 import requests
@@ -15,8 +14,6 @@ from pytz import timezone
 import os
 
 from back import mysql
-
-templates = Jinja2Templates(directory='static') 
 
 class Utils:
     @staticmethod
